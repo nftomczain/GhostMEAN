@@ -7,7 +7,7 @@
 <p align="center"><em>🇵🇱 <a href="README.pl.md">Polska wersja</a></em></p>
 
 <p align="center">
-  <a href="https://github.com/nftomczain/GhostPoster/actions"><img alt="CI" src="https://img.shields.io/badge/CI-GitHub%20Actions-blue"></a>
+  <a href="https://github.com/nftomczain/GhostMEAN/actions"><img alt="CI" src="https://img.shields.io/badge/CI-GitHub%20Actions-blue"></a>
   <img alt="Version" src="https://img.shields.io/badge/Version-0.4.10-46606c">
   <img alt="license" src="https://img.shields.io/badge/license-MIT-green">
  <img alt="Platform" src="https://img.shields.io/badge/Platform-Linux%20AppImage-46606c?logo=linux&logoColor=white">  
