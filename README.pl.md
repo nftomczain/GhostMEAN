@@ -7,7 +7,7 @@
 <p align="center"><em>🇬🇧 <a href="README.md">English version</a></em></p>
 
 <p align="center">
-  <a href="https://github.com/nftomczain/GhostPoster/actions"><img alt="CI" src="https://img.shields.io/badge/CI-GitHub%20Actions-blue"></a>
+  <a href="https://github.com/nftomczain/GhostMEAN/actions"><img alt="CI" src="https://img.shields.io/badge/CI-GitHub%20Actions-blue"></a>
   <img alt="license" src="https://img.shields.io/badge/license-MIT-green">
 <img alt="Platform" src="https://img.shields.io/badge/Platform-Linux%20AppImage-46606c?logo=linux&logoColor=white">  
 </p>
