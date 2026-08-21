@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>io.github.nftomczain.GhostMEAN</id>
+  <name>GhostMEAN</name>
+  <summary>Mean Aerodynamic Chord Calculator — open source, no cloud, no account</summary>
+  <metadata_license>MIT</metadata_license>
+  <project_license>MIT</project_license>
+  <description>
+    <p>
+      GhostMEAN computes the Mean Aerodynamic Chord (M.A.C.), wing area,
+      aspect ratio, and CG balance points for multi-panel model aircraft
+      wings, with a live top-down preview, per-panel Station View, and
+      CSV/PDF export. Everything runs locally — no account, no cloud, no
+      subscription.
+    </p>
+  </description>
+  <launchable type="desktop-id">io.github.nftomczain.GhostMEAN.desktop</launchable>
+  <provides>
+    <binary>ghostmean</binary>
+  </provides>
+  <releases>
+    <release version="0.4.8" date="2026-08-21"/>
+  </releases>
+  <content_rating type="oars-1.1"/>
+</component>

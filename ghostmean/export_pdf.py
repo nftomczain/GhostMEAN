@@ -12,6 +12,7 @@ from PySide6.QtGui import QPainter, QPen, QColor, QFont, QPdfWriter, QPageSize
 from ghostmean.drawing import draw_wing_plan
 from ghostmean.geometry import cg_from_percent_mac
 from ghostmean.units import from_mm
+from ghostmean.i18n import tr
 
 
 def export_wing_pdf(path, panels, metrics, custom_cg_percent, unit="mm"):
@@ -30,7 +31,7 @@ def export_wing_pdf(path, panels, metrics, custom_cg_percent, unit="mm"):
     # --- title ---
     painter.setFont(QFont("Sans Serif", 18, QFont.Bold))
     painter.setPen(QColor("#0b0f14"))
-    painter.drawText(QRectF(0, 20, w, 50), Qt.AlignHCenter, "GhostMEAN — Model skrzydła")
+    painter.drawText(QRectF(0, 20, w, 50), Qt.AlignHCenter, tr("pdf_title"))
 
     # --- planform drawing ---
     draw_top = 100
@@ -57,7 +58,7 @@ def export_wing_pdf(path, panels, metrics, custom_cg_percent, unit="mm"):
         painter.restore()
     else:
         painter.setPen(QColor("#888888"))
-        painter.drawText(QRectF(0, draw_top, w, draw_h), Qt.AlignCenter, "Brak danych panelu")
+        painter.drawText(QRectF(0, draw_top, w, draw_h), Qt.AlignCenter, tr("preview_no_data"))
 
     # --- results table ---
     def fmt(v_mm):
@@ -70,16 +71,16 @@ def export_wing_pdf(path, panels, metrics, custom_cg_percent, unit="mm"):
         else:
             area_val, area_unit = metrics.area_mm2 / (25.4 * 25.4), "in²"
         lines = [
-            ("Rozpiętość (Wing Span)", fmt(metrics.span_mm)),
-            ("Powierzchnia (Area)", f"{area_val:.4f} {area_unit}"),
-            ("Wydłużenie (Aspect Ratio)", f"{metrics.aspect_ratio:.3f}"),
-            ("M.A.C.", fmt(metrics.mac_mm)),
-            ("MAC — pozycja X", fmt(metrics.mac_le_x_mm)),
-            ("MAC — pozycja Y", fmt(metrics.mac_y_mm)),
-            ("CG 25% MAC (od LE na stacji MAC)", fmt(cg_from_percent_mac(metrics, 25.0))),
-            ("CG 28% MAC (od LE na stacji MAC)", fmt(cg_from_percent_mac(metrics, 28.0))),
-            ("CG 30% MAC (od LE na stacji MAC)", fmt(cg_from_percent_mac(metrics, 30.0))),
-            (f"CG {custom_cg_percent:.0f}% MAC (niestandardowy)", fmt(cg_from_percent_mac(metrics, custom_cg_percent))),
+            (tr("pdf_span"), fmt(metrics.span_mm)),
+            (tr("pdf_area"), f"{area_val:.4f} {area_unit}"),
+            (tr("pdf_ar"), f"{metrics.aspect_ratio:.3f}"),
+            (tr("pdf_mac"), fmt(metrics.mac_mm)),
+            (tr("pdf_mac_x"), fmt(metrics.mac_le_x_mm)),
+            (tr("pdf_mac_y"), fmt(metrics.mac_y_mm)),
+            (tr("pdf_cg25"), fmt(cg_from_percent_mac(metrics, 25.0))),
+            (tr("pdf_cg28"), fmt(cg_from_percent_mac(metrics, 28.0))),
+            (tr("pdf_cg30"), fmt(cg_from_percent_mac(metrics, 30.0))),
+            (tr("pdf_cg_custom", pct=custom_cg_percent), fmt(cg_from_percent_mac(metrics, custom_cg_percent))),
         ]
 
     painter.setFont(QFont("Sans Serif", 13))

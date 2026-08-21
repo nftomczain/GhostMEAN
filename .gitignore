@@ -1,7 +1,10 @@
 # Python
 __pycache__/
-*.py[cod]
-*$py.class
+*.pyc
+*.egg-info/
+build/
+dist/
+*.spec.bak
 
 # Virtual environments
 .venv/
@@ -29,6 +32,9 @@ Thumbs.db
 
 # Local project files
 *.csv
+!samples/test.csv
+!samples/test2.csv
+!samples/test_err.csv
 *.pdf
 
 # Temporary files

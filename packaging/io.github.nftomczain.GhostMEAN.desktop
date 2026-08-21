@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=GhostMEAN
+GenericName=Mean Aerodynamic Chord Calculator
+Comment=Open-source Mean Aerodynamic Chord Calculator — no cloud, no account
+Exec=ghostmean
+Icon=ghostmean
+Categories=Science;
+Terminal=false
