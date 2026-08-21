@@ -10,7 +10,7 @@
   <a href="https://github.com/nftomczain/GhostPoster/actions"><img alt="CI" src="https://img.shields.io/badge/CI-GitHub%20Actions-blue"></a>
   <img alt="license" src="https://img.shields.io/badge/license-MIT-green">
   <img alt="version" src="https://img.shields.io/github/v/release/nftomczain/GhostPoster?display_name=tag">
- <img alt="Platform" src="https://img.shields.io/badge/Platform-Linux AppImage %7C Flatpak-green">
+ <img alt="Platform" src="https://img.shields.io/badge/Platform-Linux AppImage-green">
 </p>
 
 ---
