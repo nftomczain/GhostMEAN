@@ -14,8 +14,8 @@ Design notes (accessibility-first, deliberately):
 import sys
 from pathlib import Path
 
-from PySide6.QtCore import Qt, Signal
-from PySide6.QtGui import QPainter, QPen, QColor, QFont, QIcon
+from PySide6.QtCore import Qt, Signal, QUrl
+from PySide6.QtGui import QPainter, QPen, QColor, QFont, QIcon, QDesktopServices
 from PySide6.QtWidgets import (
     QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QGridLayout,
     QLabel, QDoubleSpinBox, QComboBox, QGroupBox, QCheckBox, QFrame,
@@ -33,6 +33,23 @@ from ghostmean.io_csv import save_panels_csv, load_panels_csv, WingData, PanelRo
 from ghostmean.export_pdf import export_wing_pdf
 from ghostmean.io_stations import save_stations_csv
 from ghostmean.i18n import tr, set_language, get_language, available_languages
+from ghostmean import __version__
+
+WIKI_URL = "https://github.com/nftomczain/GhostMEAN/wiki"
+
+# Each language's own native name, shown in the language selector dropdown.
+# Deliberately NOT routed through tr() -- every language selector convention
+# (iOS, Android, virtually every desktop app) shows each language in its own
+# native form regardless of the currently active UI language, so "Español"
+# reads as "Español" whether the app is currently in English or German.
+LANGUAGE_DISPLAY_NAMES = {
+    "pl": "Polski",
+    "en": "English",
+    "ru": "Русский",
+    "es": "Español",
+    "de": "Deutsch",
+    "fr": "Français",
+}
 
 MAX_PANELS = 5
 
@@ -309,8 +326,8 @@ class PanelRow(QWidget):
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle(tr("window_title"))
-        self.resize(1060, 820)
+        self.setWindowTitle(tr("window_title", version=__version__))
+        self.resize(1110, 820)
         if Path(ICON_PATH).exists():
             self.setWindowIcon(QIcon(ICON_PATH))
 
@@ -357,12 +374,17 @@ class MainWindow(QMainWindow):
         top_bar.addWidget(self.show_dims_checkbox)
         top_bar.addStretch()
         self.language_label = QLabel(tr("topbar_language"))
+        self.language_label.setMinimumWidth(85)
         top_bar.addWidget(self.language_label)
         self.language_combo = QComboBox()
-        self.language_combo.addItems(available_languages())
-        self.language_combo.setCurrentText(get_language())
+        for code in available_languages():
+            self.language_combo.addItem(LANGUAGE_DISPLAY_NAMES.get(code, code), code)
+        self.language_combo.setMinimumWidth(110)
+        idx = self.language_combo.findData(get_language())
+        if idx >= 0:
+            self.language_combo.setCurrentIndex(idx)
         self.language_combo.setAccessibleName(tr("topbar_language_accessible"))
-        self.language_combo.currentTextChanged.connect(self._on_language_changed)
+        self.language_combo.currentIndexChanged.connect(self._on_language_index_changed)
         top_bar.addWidget(self.language_combo)
         root.addLayout(top_bar)
 
@@ -447,9 +469,23 @@ class MainWindow(QMainWindow):
             tr("stations_header_chord"),
         ])
 
+    def _on_language_index_changed(self, index: int):
+        code = self.language_combo.itemData(index)
+        if code:
+            self._on_language_changed(code)
+
+    def set_language_by_code(self, code: str):
+        """Select a language in the combo by its short code (e.g. "en"),
+        regardless of what display name the combo currently shows for it.
+        Used by tests, and safe for any other code that needs to switch
+        language programmatically without reaching into combo internals."""
+        idx = self.language_combo.findData(code)
+        if idx >= 0:
+            self.language_combo.setCurrentIndex(idx)
+
     def _on_language_changed(self, code: str):
         set_language(code)
-        self.setWindowTitle(tr("window_title"))
+        self.setWindowTitle(tr("window_title", version=__version__))
         self.units_label.setText(tr("topbar_units"))
         self.unit_combo.setAccessibleName(tr("topbar_units_accessible"))
         self.cg_custom_label.setText(tr("topbar_cg_custom"))
@@ -501,6 +537,22 @@ class MainWindow(QMainWindow):
         export_stations_action = file_menu.addAction(tr("menu_export_stations"))
         export_stations_action.setToolTip(tr("menu_export_stations_tooltip"))
         export_stations_action.triggered.connect(self._on_export_stations_csv)
+
+        help_menu = menubar.addMenu(tr("menu_help"))
+        wiki_action = help_menu.addAction(tr("menu_wiki"))
+        wiki_action.triggered.connect(self._on_open_wiki)
+
+        help_menu.addSeparator()
+        about_action = help_menu.addAction(tr("menu_about"))
+        about_action.triggered.connect(self._on_open_about)
+
+    def _on_open_wiki(self):
+        QDesktopServices.openUrl(QUrl(WIKI_URL))
+
+    def _on_open_about(self):
+        from ghostmean.about_dialog import AboutDialog
+        dlg = AboutDialog(self)
+        dlg.exec()
 
     def _on_new_project(self):
         reply = QMessageBox.question(
@@ -838,6 +890,13 @@ class MainWindow(QMainWindow):
 
 
 def main():
+    # --version / -v: print and exit before touching Qt at all, so it
+    # works even in a headless/no-display environment (CI, SSH session).
+    if "--version" in sys.argv or "-v" in sys.argv:
+        from ghostmean import __version__
+        print(f"GhostMEAN {__version__}")
+        sys.exit(0)
+
     app = QApplication(sys.argv)
     app.setStyleSheet(DARK_QSS)
     app.setFont(QFont("Sans Serif", 11))

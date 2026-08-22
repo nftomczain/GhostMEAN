@@ -24,14 +24,14 @@ language.
 from ghostmean.i18n import pl, en, ru, es, de, fr
 
 LANGUAGES = {
-    "Polski": pl.STRINGS,
-    "English": en.STRINGS,
-    "Русский": ru.STRINGS,
-    "Español": es.STRINGS,
-    "Deutsch": de.STRINGS,
-    "Français": fr.STRINGS,
+    "pl": pl.STRINGS,
+    "en": en.STRINGS,
+    "ru": ru.STRINGS,
+    "es": es.STRINGS,
+    "de": de.STRINGS,
+    "fr": fr.STRINGS,
 }
-DEFAULT_LANGUAGE = "Polski"
+DEFAULT_LANGUAGE = "pl"
 
 _current_language = DEFAULT_LANGUAGE
 

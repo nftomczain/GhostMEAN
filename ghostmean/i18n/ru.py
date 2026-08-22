@@ -1,5 +1,5 @@
 STRINGS = {
-    "window_title": "GhostMEAN — Mean Aerodynamic Chord Calculator",
+    "window_title": "GhostMEAN {version} — Mean Aerodynamic Chord Calculator",
 
     "menu_file": "Файл",
     "menu_new_project": "Новый проект...",
@@ -11,6 +11,8 @@ STRINGS = {
         "Отдельный формат: полная, готовая геометрия (Y/LE/TE/хорда) на каждой станции — "
         "не для повторной загрузки, только для использования при постройке"
     ),
+    "menu_help": "Справка",
+    "menu_wiki": "Wiki (онлайн-документация)",
 
     "new_project_title": "Новый проект",
     "new_project_body": (
@@ -149,4 +151,11 @@ STRINGS = {
     "pdf_cg28": "CG 28% MAC (от LE на станции MAC)",
     "pdf_cg30": "CG 30% MAC (от LE на станции MAC)",
     "pdf_cg_custom": "CG {pct:.0f}% MAC (свой)",
+    "menu_about": "О программе",
+    "about_window_title": "О программе — GhostMEAN",
+    "about_version_accessible": "Текущая версия программы",
+    "about_link_wiki_accessible": "Открыть Wiki проекта в браузере",
+    "about_link_github_accessible": "Открыть репозиторий на GitHub в браузере",
+    "about_link_support_accessible": "Открыть обсуждения проекта на GitHub в браузере",
+    "about_close": "Закрыть",
 }

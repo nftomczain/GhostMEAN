@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ghostmean"
-version = "0.4.10"
+version = "1.0.0"
 description = "GhostMEAN — Mean Aerodynamic Chord Calculator (open source, no cloud, no account)"
 readme = "README.md"
 license = { text = "MIT" }
@@ -13,11 +13,18 @@ dependencies = [
     "PySide6>=6.5",
 ]
 
+[project.optional-dependencies]
+test = ["pytest>=7.0"]
+
 [project.scripts]
 ghostmean-gui = "ghostmean.gui:main"
+ghostmean = "ghostmean.gui:main"
 
 [tool.setuptools.packages.find]
 include = ["ghostmean*"]
 
 [tool.setuptools.package-data]
 ghostmean = ["assets/*.png"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

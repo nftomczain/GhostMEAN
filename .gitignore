@@ -43,4 +43,7 @@ Thumbs.db
 
 # Python packaging
 *.egg-info/
+
+# Wiki
+Docs/Wiki/
 *~

@@ -176,22 +176,6 @@ def compute_panel_stations(panels: list[WingPanel]) -> list[tuple[Station, Stati
     return pairs
 
 
-def compute_stations(panels: list[WingPanel]) -> list[Station]:
-    """Flat, root-to-tip outline station list for drawing / the station
-    table / CSV export.
-
-    GHOST MEAN PRINCIPLE (locked, v0.4.0): the user's panel data is the
-    truth -- the program never silently "fixes" a mismatch between one
-    panel's Major and the previous panel's Minor. Each panel is drawn from
-    its OWN Major/Minor (see compute_panel_stations() above). Normally
-    this produces exactly one entry per boundary (root, each panel
-    junction, tip) because consecutive panels agree. If they DON'T agree,
-    a real step exists in the wing outline, and TWO entries are emitted at
-    that boundary's Y -- the end of the previous panel and the start of
-    the current one -- so the outline (and the station table) show the
-    actual jump instead of smoothing over it. The GUI separately raises a
-    non-blocking validation warning when this happens; it never blocks or
-    alters the calculation."""
 def _default_station_label(kind: str, **kw) -> str:
     """Fallback labels (Polish), used when compute_stations() is called
     without a label_fn -- keeps geometry.py usable/testable standalone,
